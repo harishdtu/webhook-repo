@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GitHub Events</title>
+</head>
+<body>
+    <h2>Latest GitHub Events</h2>
+    <ul id="events"></ul>
+
+    <script>
+        async function fetchEvents() {
+            const res = await fetch("/events");
+            const data = await res.json();
+
+            data.forEach(e => {
+                const li = document.createElement("li");
+                li.innerText = e.message;
+                document.getElementById("events").appendChild(li);
+            });
+        }
+
+        fetchEvents();
+        setInterval(fetchEvents, 15000);
+    </script>
+</body>
+</html>

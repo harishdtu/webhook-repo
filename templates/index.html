@@ -2,25 +2,41 @@
 <html>
 <head>
     <title>GitHub Events</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+        li {
+            margin-bottom: 8px;
+        }
+    </style>
 </head>
 <body>
-    <h2>Latest GitHub Events</h2>
-    <ul id="events"></ul>
 
-    <script>
-        async function fetchEvents() {
-            const res = await fetch("/events");
-            const data = await res.json();
+<h2>Latest GitHub Events</h2>
+<ul id="events"></ul>
 
-            data.forEach(e => {
-                const li = document.createElement("li");
-                li.innerText = e.message;
-                document.getElementById("events").appendChild(li);
-            });
-        }
+<script>
+    async function fetchEvents() {
+        const res = await fetch("/events");
+        const data = await res.json();
 
-        fetchEvents();
-        setInterval(fetchEvents, 15000);
-    </script>
+        const list = document.getElementById("events");
+
+        // ✅ Clear old events before rendering new ones
+        list.innerHTML = "";
+
+        data.forEach(e => {
+            const li = document.createElement("li");
+            li.innerText = e.message;
+            list.appendChild(li);
+        });
+    }
+
+    fetchEvents();
+    setInterval(fetchEvents, 15000);
+</script>
+
 </body>
 </html>
